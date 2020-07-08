@@ -39,6 +39,7 @@ const order = () => {
         temp.push(e.data.map((e)=>{
             return(
                 {
+                    id:e.id,
                     name:e.name,
                     description:e.description,
                     inventory:e.inventory,
@@ -63,12 +64,15 @@ const order = () => {
         setVisible(false);
 
         let order = [];
+        let orderItems = {};
+        const axiosConfig = { headers:{ "Content-Type": "application/json" }}
 
         order.push(
             orderList[0].map(e=>{
                 return(
                     {    
                         item:{
+                            id:e.id,
                             name:e.name,
                             description:e.description,
                             inventory:e.inventory,
@@ -80,40 +84,18 @@ const order = () => {
                 )
             })
         )
-
-       console.log(order.pop())
-       axios.post(`http://221.160.155.96:8888/orders`,{
-        order
-       }).then(
+       
+        orderItems = order[0].concat();
+        console.log(JSON.stringify({orderItems}))
+        
+       axios.post(`http://221.160.155.96:8888/orders`,
+        JSON.stringify({orderItems}),
+        { headers:{ "Content-Type": "application/json" }}
+       ).then(
            e=>{
-            console.log(e)
+            Router.push('/orderCompleted');
            }
        )
-
-       Router.push('/orderCompleted');
-
-
-        axios.get(`http://221.160.155.96:8888/items`) //개수 초기화
-      .then((e)=>{
-        let temp = [];
-        temp.push(e.data.map((e)=>{
-            return(
-                {
-                    name:e.name,
-                    description:e.description,
-                    inventory:e.inventory,
-                    distributor:e.distributor,
-                    price:e.price,
-                    quantity:0,
-                }
-                
-            )
-        }))
-        setOrderList(temp);
-        setMenulist(e.data)
-        setTotalQuantity(0)
-        setTotalPrice(0)
-      })
   
     }
 
