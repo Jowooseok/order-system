@@ -37,6 +37,7 @@ const confirm = () => {
 
             <List
                 dataSource={item}
+                bordered
                 renderItem={(e, i) => (
                     <List.Item >
 
@@ -50,7 +51,7 @@ const confirm = () => {
                             <Col span={12}><Button style={{ width: '100%' }} onClick={goHome}><HomeOutlined />고객정보</Button></Col>
                         </Row>
 
-                        <div style={{ marginTop: '10px', width:'100%',  marginBottom: '10px', border:'1px solid' }} />
+                        <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 
                     <Row style={{border:'1px dashed', width:'100%', padding:'5px'}}>
                 <Col span={24}>물품내역 :  </Col>
@@ -71,14 +72,14 @@ const confirm = () => {
 
 
 
-                        <div style={{ marginTop: '10px', width:'100%',  marginBottom: '10px', border:'1px solid' }} />
+                        <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 
                         <Row style={{ width: '100%', float: 'right' }}>
-                            <Col span={6}>
+                            <Col span={8}>
                                 <b>총 주문 금액</b>
                             </Col>
-                            <Col span={18} style={{ width: '100%', float: 'right' }}>
-                                <b>{
+                            <Col span={16} style={{ width: '100%'}}>
+                                <b style={{float:'right'}}>{
                                     e.orderItems.map(ee=>{
                                     totalPrice = totalPrice + ee.item.price * ee.quantity
                                 }                                

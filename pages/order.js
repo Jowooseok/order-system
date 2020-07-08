@@ -138,6 +138,7 @@ const order = () => {
         return (
             <List
                 dataSource={menulist}
+                bordered
                 renderItem={(e,i) => (
                     <List.Item >
                         <Row style={{width:'100%'}}>
@@ -157,7 +158,7 @@ const order = () => {
                                 <Divider dashed={true} style={{ marginTop: '5px', marginBottom: '5px' }} />
                                 <Row align={'middle'} style={{ float: 'right' }}>
                             수량 : {orderList[0]&&orderList[0][i].quantity} &nbsp; <Button onClick={itemCountUp(i)}>+</Button> &nbsp; <Button onClick={itemCountDown(i)}>-</Button>
-                        </Row>`
+                        </Row>
                             </Col>
                         </Row>
                     </List.Item>
