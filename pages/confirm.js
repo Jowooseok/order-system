@@ -13,8 +13,8 @@ import {
 
 const confirm = () => {
     const [item, setItem] = useState();
-
-    let totalPrice = [];
+    let totalPrice = 0
+    let totalPrices = [];
 
     useEffect(() => {
         axios.get(`http://221.160.155.96:8888/orders`)
@@ -50,7 +50,7 @@ const confirm = () => {
                             <Col span={12}><Button style={{ width: '100%' }} onClick={goHome}><HomeOutlined />고객정보</Button></Col>
                         </Row>
 
-                        <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
+                        <div style={{ marginTop: '10px', width:'100%',  marginBottom: '10px', border:'1px solid' }} />
 
                     <Row style={{border:'1px dashed', width:'100%', padding:'5px'}}>
                 <Col span={24}>물품내역 :  </Col>
@@ -71,16 +71,22 @@ const confirm = () => {
 
 
 
-                        <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
+                        <div style={{ marginTop: '10px', width:'100%',  marginBottom: '10px', border:'1px solid' }} />
 
                         <Row style={{ width: '100%', float: 'right' }}>
                             <Col span={6}>
                                 <b>총 주문 금액</b>
                             </Col>
                             <Col span={18} style={{ width: '100%', float: 'right' }}>
-                                <b>{console.log(e.orderItems.map(ee=>{
-                                    totalPrice.push(ee.item.price * ee.quantity) 
-                                }))}{totalPrice[i]}원</b>
+                                <b>{
+                                    e.orderItems.map(ee=>{
+                                    totalPrice = totalPrice + ee.item.price * ee.quantity
+                                }                                
+                                
+                                ),totalPrices.push(totalPrice), console.log(totalPrice=0)}
+                               
+                                {totalPrices[i]}원</b>
+                           
                             </Col>
 
                         </Row>
