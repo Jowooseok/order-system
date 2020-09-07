@@ -7,12 +7,13 @@ const { Search } = Input;
 const home = () => {
 
     const [address, setAddress] = useState('청원구청');
+    const [radius, setRadius] = useState(1500);
 
     useEffect(() => {
         let container = document.getElementById('map');
         let options = {
             center: new kakao.maps.LatLng(36.652168231792736, 127.49570654728812),
-            level: 6
+            level: 7
         };
 
         let map = new kakao.maps.Map(container, options);
@@ -27,9 +28,6 @@ const home = () => {
             if (status === kakao.maps.services.Status.OK) {
                 let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-                console.log(coords.Ga)
-                console.log(coords.Ha)
-
                 // 결과값으로 받은 위치를 마커로 표시합니다
                 let marker = new kakao.maps.Marker({
                     map: map,
@@ -43,9 +41,14 @@ const home = () => {
                 // infowindow.open(map, marker);
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                var circle = new kakao.maps.Circle({
+             
+                if(!isNaN(radius)){ //한글/영어/특수문자등 입력 방지
+                  
+                const circle = new kakao.maps.Circle({
+                    
                     center : new kakao.maps.LatLng(coords.Ha, coords.Ga),  // 원의 중심좌표 입니다 
-                    radius: 1500, // 미터 단위의 원의 반지름입니다 
+
+                    radius: radius, // 미터 단위의 원의 반지름입니다 
                     strokeWeight: 5, // 선의 두께입니다 
                     strokeColor: '#75B8FA', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -56,21 +59,22 @@ const home = () => {
                 
                 // 지도에 원을 표시합 니다 
                 circle.setMap(map);
+            }
 
                 map.setCenter(coords);
             }
         });
 
-    }, [address])
+    }, [address, radius])
 
     return (
         <>
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
-            <div id='map' style={{ height: '100vh' }}>{
-                <Search style={{ width: '30%', position: 'absolute', zIndex: '2' }} placeholder="주소 입력" onSearch={value => {setAddress(value)}} enterButton />
-
-            }</div>
+            <div id='map' style={{ height: '100vh' }}>
+                <Search style={{ width: '70%', position: 'absolute', zIndex: '2' }} placeholder="주소 입력" onSearch={value => {setAddress(value)}} enterButton />
+                <Input style={{width:'30%', float:'right', zIndex:'2'}} onChange={e=>{setRadius(e.target.value)}}  placeholder='반경미터입력'  />
+            </div>
         </>
     )
 }
