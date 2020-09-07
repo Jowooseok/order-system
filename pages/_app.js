@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 const Jrun2ng = ({ Component }) => {
 
     return (
-        <div style={{ }}>
+        <div style={{height:'100%', width:'100%'}}>
            <Component />
         </div>
     )
