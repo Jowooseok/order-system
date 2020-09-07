@@ -33,7 +33,7 @@ const order = () => {
 
     useEffect(()=>{
         // setMenulist(axios.get())
-      axios.get(`http://221.160.155.96:8888/items`)
+      axios.get(`http://seansin.iptime.org//items`)
       .then((e)=>{
         let temp = [];
         temp.push(e.data.map((e)=>{
@@ -57,6 +57,9 @@ const order = () => {
 
     //모달
     const showModal = () => {
+        if(totalQuantity===0){
+            return
+        }
         setVisible(true)
     }
 
@@ -88,7 +91,7 @@ const order = () => {
         orderItems = order[0].concat();
         console.log(JSON.stringify({orderItems}))
         
-       axios.post(`http://221.160.155.96:8888/orders`,
+       axios.post(`http://seansin.iptime.org//orders`,
         JSON.stringify({orderItems}),
         { headers:{ "Content-Type": "application/json" }}
        ).then(

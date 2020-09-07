@@ -1,0 +1,26 @@
+{
+    "orderItems": [
+        {
+            "item": {
+                "id": 1,
+                "name": "떡볶이",
+                "description": "맛있는 떡볶이",
+                "inventory": 5,
+                "distributor": "롯데",
+                "price": 1000
+            },
+            "quantity": 2
+        },
+        {
+            "item": {
+                "id": 2,
+                "name": "우동 ",
+                "description": "맛있는 우동",
+                "inventory": 6,
+                "distributor": "농심",
+                "price": 200
+            },
+            "quantity": 4
+        }
+    ]
+}

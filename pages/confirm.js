@@ -17,7 +17,7 @@ const confirm = () => {
     let totalPrices = [];
 
     useEffect(() => {
-        axios.get(`http://221.160.155.96:8888/orders`)
+        axios.get(`http://seansin.iptime.org//orders`)
             .then(e => {
                 setItem(e.data)
             })
