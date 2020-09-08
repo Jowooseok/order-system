@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Menu, Dropdown, Button, Divider, Input } from 'antd';
 import Link from 'next/link';
+import { StarFilled } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -85,23 +86,27 @@ const home = () => {
     }, [address, radius])
 
     const searchClick = () => {
-        if(searchMethod==='주소'){
+        if (searchMethod === '주소') {
             setSearchMethod('키워드')
-        }else{
+        } else {
             setSearchMethod('주소')
         }
     }
-    
+
 
     return (
         <>
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
-            <div id='map' style={{ height: '100vh', zIndex: '0' }}>
-                <Button style={{ width: '10%', float: 'left', zIndex: '2' }} onClick={searchClick} >{searchMethod}</Button>
-                <Search style={{ width: '60%', position: 'absolute', zIndex: '2' }} placeholder="주소 입력" onSearch={value => { setAddress(value) }} enterButton />
-                <Input style={{ width: '20%', float: 'right', zIndex: '2' }} onChange={e => { setRadius(e.target.value) }} placeholder='반경미터입력' />
+
+            <div style={{ height: '10vh', zIndex: '0' }}>
+                <Button style={{ width: '50%',  }} onClick={searchClick} >{searchMethod}</Button>
+                <Input style={{ width: '50%',  }} onChange={e => { setRadius(e.target.value) }} placeholder='반경미터입력' />    
+                <Search style={{ width: '100%', float: 'left' }} placeholder={searchMethod+'입력'} onSearch={value => { setAddress(value) }} enterButton />
+                <StarFilled style={{ bottom: '300px', right: '1px', zIndex: '2', color: 'yellow', position: 'absolute', fontSize: '50px' }} />
             </div>
+            <div id='map' style={{ height: '90vh' }}></div>
+
         </>
     )
 }
