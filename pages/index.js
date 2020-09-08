@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {Menu, Dropdown, Button, Divider, Input} from 'antd';
 import Link from 'next/link';
 import {StarFilled} from '@ant-design/icons';
-import addressS from './addressS';
-import keywordS from './keywordS';
+import addressS from '../pages/addressS';
+import keywordS from '../pages/keywordS';
 
 const {Search} = Input;
 
@@ -15,13 +15,9 @@ const home = () => {
     const [searchMethod, setSearchMethod] = useState('주소');
 
     if (searchMethod === '주소') {
-        useEffect(() => {
-            addressS(address,radius)
-        }, [address, radius])
+            addressS(address,radius) //useEffect를 함수 안에서 사용 => 참고로 document나 window를 사용하기 위해서는 next.js는 useEffect안에서 사용 가능
     } else {
-        useEffect(() => {
             keywordS(keyword);
-        },[keyword]) //요거 추가해주셔야 state값 바뀔때 렌더링 되서 바로 적용됩니다.
     }
 
     const searchClick = () => {
