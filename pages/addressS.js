@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react';
-
 const addressS = (address,radius) => {
     useEffect(()=>{
+        
         let container = document.getElementById('map');
     
         let options = {
@@ -58,7 +58,9 @@ const addressS = (address,radius) => {
         });
     },[radius,address])
 
-    return(<></>)
+    return(<>
+
+    </>)
     
 }
 

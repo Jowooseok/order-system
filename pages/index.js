@@ -32,7 +32,7 @@ const home = () => {
     return (
         <>
             <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f5257ceead83a67940fcafe2a21c87ae&libraries=services,clusterer,drawing"></script>
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
 
             <div style={{height: '10vh', zIndex: '0'}}>
