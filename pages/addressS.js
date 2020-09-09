@@ -34,7 +34,7 @@ const addressS = (address,radius) => {
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 
-                if (!isNaN(radius)) { //한글/영어/특수문자등 입력 방지
+                if (!isNaN(radius) && radius!==0) { //한글/영어/특수문자등 입력 방지
 
                     const circle = new kakao.maps.Circle({
 

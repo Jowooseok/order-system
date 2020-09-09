@@ -11,8 +11,7 @@ const { Search } = Input;
 const home = () => {
     const [address, setAddress] = useState(' ');
     const [keyword, setKeyword] = useState(' ');
-    const [radiusChange, setRadiusChange] = useState(1500);
-    const [radius, setRadius] = useState(1500);
+    const [radius, setRadius] = useState(0);
     const [searchMethod, setSearchMethod] = useState('주소');
 
     if (searchMethod === '주소') {
@@ -29,8 +28,17 @@ const home = () => {
         }
     }
 
-    const enterRadius = () =>{
-        setRadius(radiusChange)
+    const enterRadius15 = () =>{
+        setRadius(1500)
+    }
+    const enterRadius20 = () =>{
+        setRadius(2000)
+    }
+    const enterRadius25 = () =>{
+        setRadius(2500)
+    }
+    const enterRadius30 = () =>{
+        setRadius(3000)
     }
 
 
@@ -42,12 +50,13 @@ const home = () => {
             <div id='map' style={{ height: '100vh',zIndex:0 }}>
 
             </div>
-
+            <div>
             <Button type={'dashed'} style={{ width: '30%', position: 'absolute',top:'0px' }} onClick={searchClick}>{searchMethod}</Button>
-            <Input style={{ width: '70%', right: '0px', position: 'absolute',top:'0px' }} onChange={e => {
-                setRadiusChange(e.target.value)
-            }} placeholder='반경미터입력' onPressEnter={enterRadius}  />
-            <Button type={'danger'} style={{ right: '0px', position: 'absolute',top:'0px',border:'1px solid' }} onClick={enterRadius}>Click</Button>
+            <Button type={'primary'} style={{ position:'absolute',top:'0px',left:'115px' }} onClick={enterRadius15}>1.5km</Button>
+            <Button type={'danger'} style={{ position:'absolute',top:'0px',left:'185px' }} onClick={enterRadius20}>2km</Button>
+            <Button type={'primary'} style={{ position:'absolute',top:'0px',left:'245px' }} onClick={enterRadius25}>2.5km</Button>
+            <Button type={'danger'} style={{ position:'absolute',top:'0px',left:'315px' }} onClick={enterRadius30}>3km</Button>
+            </div>
            
             <Search style={{ width: '100%', position: 'absolute', top: '32px'}} placeholder={searchMethod + '입력'} onSearch={value => {
                 (searchMethod === '주소') ? setAddress(value) : setKeyword(value)
