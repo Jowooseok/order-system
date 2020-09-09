@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react'
 import {Menu, Dropdown, Button, Divider, Input} from 'antd';
 import Link from 'next/link';
 import {StarFilled} from '@ant-design/icons';
+import addressS from '../pages/addressS';
+import keywordS from '../pages/keywordS';
 
 const {Search} = Input;
 
 
 const home = () => {
-
     const [address, setAddress] = useState(' ');
     const [keyword, setKeyword] = useState(' ');
     const [radius, setRadius] = useState(1500);
@@ -16,6 +17,7 @@ const home = () => {
 
 
     if (searchMethod === '주소') {
+<<<<<<< HEAD
         useEffect(() => {
             let container = document.getElementById('map');
             let options = {
@@ -123,6 +125,11 @@ const home = () => {
                 });
             }
         })
+=======
+            addressS(address,radius) //useEffect를 함수 안에서 사용 => 참고로 document나 window를 사용하기 위해서는 next.js는 useEffect안에서 사용 가능
+    } else {
+            keywordS(keyword);
+>>>>>>> 4e2b5f6cf29926eff91d4c65a9bad7e300ca818b
     }
 
     const searchClick = () => {
@@ -137,7 +144,7 @@ const home = () => {
     return (
         <>
             <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f5257ceead83a67940fcafe2a21c87ae&libraries=services,clusterer,drawing"></script>
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
 
             <div style={{height: '10vh', zIndex: '0'}}>
