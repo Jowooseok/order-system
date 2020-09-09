@@ -20,6 +20,17 @@ const home = () => {
         keywordS(keyword);
     }
 
+    const onClickSearch = (value) =>{
+        if(searchMethod === '주소'){
+            setAddress(value)
+            setKeyword('')
+        }else if(searchMethod === '키워드'){
+            setKeyword(value)
+            setAddress('');
+        }
+       
+    }
+
     const searchClick = () => {
         if (searchMethod === '주소') {
             setSearchMethod('키워드')
@@ -58,9 +69,7 @@ const home = () => {
             <Button type={'danger'} style={{ position:'absolute',top:'0px',left:'315px' }} onClick={enterRadius30}>3km</Button>
             </div>
            
-            <Search style={{ width: '100%', position: 'absolute', top: '32px'}} placeholder={searchMethod + '입력'} onSearch={value => {
-                (searchMethod === '주소') ? setAddress(value) : setKeyword(value)
-            }} enterButton />\
+            <Search style={{ width: '100%', position: 'absolute', top: '32px'}} placeholder={searchMethod + '입력'} onSearch={onClickSearch} enterButton />\
 
             {/* <StarFilled style={{
                 bottom: '300px',
