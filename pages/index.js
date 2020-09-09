@@ -13,6 +13,8 @@ const home = () => {
     const [radius, setRadius] = useState(1500);
     const [searchMethod, setSearchMethod] = useState('주소');
 
+
+
     if (searchMethod === '주소') {
         useEffect(() => {
             let container = document.getElementById('map');
@@ -22,6 +24,7 @@ const home = () => {
             };
 
             let map = new kakao.maps.Map(container, options);
+
 
             // 주소로 좌표를 검색합니다
             let geocoder = new kakao.maps.services.Geocoder();
@@ -33,7 +36,7 @@ const home = () => {
                     let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                     // 결과값으로 받은 위치를 마커로 표시합니다
-                    var marker = new kakao.maps.Marker({
+                    let marker = new kakao.maps.Marker({
                         map: map,
                         position: coords
                     });
@@ -69,10 +72,10 @@ const home = () => {
                 }
             });
         }, [address, radius])
-    } else {
+    }
+    // 키워드로 좌표를 검색합니다
+    else {
         useEffect(() => {
-            let infowindow = new kakao.maps.InfoWindow({zIndex: 1});
-
             let container = document.getElementById('map');
             let options = {
                 center: new kakao.maps.LatLng(36.7332136, 127.3946865),
@@ -81,7 +84,8 @@ const home = () => {
 
             let map = new kakao.maps.Map(container, options);
 
-            // 키워드로 좌표를 검색합니다
+            let infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
             let ps = new kakao.maps.services.Places();
 
             ps.keywordSearch(keyword, function (data, status, pagination) {
@@ -91,7 +95,7 @@ const home = () => {
 
                     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                     // LatLngBounds 객체에 좌표를 추가합니다
-                    var bounds = new kakao.maps.LatLngBounds();
+                    let bounds = new kakao.maps.LatLngBounds();
 
                     for (var i = 0; i < data.length; i++) {
                         displayMarker(data[i]);
@@ -106,7 +110,7 @@ const home = () => {
 
             function displayMarker(place) {
                 // 마커를 생성하고 지도에 표시합니다
-                var marker = new kakao.maps.Marker({
+                let marker = new kakao.maps.Marker({
                     map: map,
                     position: new kakao.maps.LatLng(place.y, place.x)
                 });
@@ -143,7 +147,7 @@ const home = () => {
                 }} placeholder='반경미터입력'/>
                 <Search style={{width: '100%', float: 'left'}} placeholder={searchMethod + '입력'} onSearch={value => {
                     (searchMethod === '주소') ? setAddress(value) : setKeyword(value)
-                }} enterButton/>
+                }}  enterButton/>
                 <StarFilled style={{
                     bottom: '300px',
                     right: '1px',
