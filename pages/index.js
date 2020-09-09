@@ -17,7 +17,7 @@ const home = () => {
 
 
     if (searchMethod === '주소') {
-<<<<<<< HEAD
+
         useEffect(() => {
             let container = document.getElementById('map');
             let options = {
@@ -125,11 +125,11 @@ const home = () => {
                 });
             }
         })
-=======
+
             addressS(address,radius) //useEffect를 함수 안에서 사용 => 참고로 document나 window를 사용하기 위해서는 next.js는 useEffect안에서 사용 가능
-    } else {
+
+    else {
             keywordS(keyword);
->>>>>>> 4e2b5f6cf29926eff91d4c65a9bad7e300ca818b
     }
 
     const searchClick = () => {
