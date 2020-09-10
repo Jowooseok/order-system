@@ -1,27 +1,14 @@
 import React,{useEffect} from 'react';
-
 const addressS = (address,radius) => {
     useEffect(()=>{
-<<<<<<< HEAD
-        let container = document.getElementById('map');
-        let options = {
-            center: new kakao.maps.LatLng(36.7332136, 127.3946865),
-            level: 8
-        };
-        let map = new kakao.maps.Map(container, options);
-=======
-        
         const container = document.getElementById('map');
-    
         const options = {
             center: new kakao.maps.LatLng(36.7332136, 127.3946865),
             level: 8
         };
-
         const map = new kakao.maps.Map(container, options);
->>>>>>> ce526d2caf5691fff517f8bcbb4a9966fe4201e0
 
-
+        const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
         // 주소로 좌표를 검색합니다
         const geocoder = new kakao.maps.services.Geocoder();
 
@@ -32,27 +19,18 @@ const addressS = (address,radius) => {
                 const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                 // 결과값으로 받은 위치를 마커로 표시합니다
-<<<<<<< HEAD
-                let marker = new kakao.maps.Marker({
-=======
                 const marker = new kakao.maps.Marker({
->>>>>>> ce526d2caf5691fff517f8bcbb4a9966fe4201e0
                     map: map,
                     position: coords
                 });
-
-                // 인포윈도우로 장소에 대한 설명을 표시합니다
-                // let infowindow = new kakao.maps.InfoWindow({
-                //     content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-                // });
-                // infowindow.open(map, marker);
-
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-
-                if (!isNaN(radius) && radius!==0) { //한글/영어/특수문자등 입력 방지
+                //인포윈도우로 장소에 대한 설명을 표시합니다
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                    let content = '<div style="padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">' + result[0].address.address_name + '</div>';
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
 
                     const circle = new kakao.maps.Circle({
-
                         center: new kakao.maps.LatLng(coords.Ha, coords.Ga),  // 원의 중심좌표 입니다
 
                         radius: radius, // 미터 단위의 원의 반지름입니다
@@ -63,20 +41,16 @@ const addressS = (address,radius) => {
                         fillColor: '#CFE7FF', // 채우기 색깔입니다
                         fillOpacity: 0.7  // 채우기 불투명도 입니다
                     });
-
-                    // 지도에 원을 표시합 니다
                     circle.setMap(map);
-                }
+                });
 
-                map.panTo(coords);
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
             }
         });
     },[radius,address])
 
-    return(<>
-
-    </>)
-
+    return(<></>)
 }
 
 export default addressS;
