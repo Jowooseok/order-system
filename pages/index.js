@@ -14,6 +14,15 @@ const home = () => {
     const [radius, setRadius] = useState(1500);
     const [searchMethod, setSearchMethod] = useState('주소');
 
+    useEffect(()=> {
+        let container = document.getElementById('map');
+        let options = {
+            center: new kakao.maps.LatLng(36.7332136, 127.3946865),
+            level: 8
+        };
+        let map = new kakao.maps.Map(container, options);
+    })
+
     if (searchMethod === '주소') {
             addressS(address,radius) //useEffect를 함수 안에서 사용 => 참고로 document나 window를 사용하기 위해서는 next.js는 useEffect안에서 사용 가능
     } else {
@@ -28,12 +37,10 @@ const home = () => {
         }
     }
 
-
     return (
         <>
             <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
-
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f5257ceead83a67940fcafe2a21c87ae&libraries=services,clusterer,drawing"></script>
 
             <div style={{height: '10vh', zIndex: '0'}}>
                 <Button style={{width: '50%',}} onClick={searchClick}>{searchMethod}</Button>
@@ -53,10 +60,8 @@ const home = () => {
                 }}/>
             </div>
             <div id='map' style={{height: '90vh'}}></div>
-
         </>
     )
 }
 
 export default home;
-
