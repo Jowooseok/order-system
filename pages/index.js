@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Router from 'next/router';
 import { Menu, Dropdown, Button, Divider, Input, Affix } from 'antd';
 import Link from 'next/link';
 import { StarFilled } from '@ant-design/icons';
@@ -35,7 +36,7 @@ const home = () => {
         i = infowindow;
         b = kakao.maps.services;
         p = ps;
-    }, [])
+    },[])
 
     const searchKeyword = (value) => {
         if(radius===0){
@@ -203,13 +204,13 @@ const home = () => {
             </div>
 
             <Search style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} onPressEnter={searchFuction} enterButton />
-            {/* <StarFilled style={{
+            <StarFilled style={{
                 bottom: '300px',
                 right: '1px',
                 color: 'yellow',
                 position: 'absolute',
                 fontSize: '50px'
-            }} /> */}
+            }} onClick={()=>{window.location.reload()}}  />
         </>
     )
 }
