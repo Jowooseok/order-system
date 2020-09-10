@@ -2,25 +2,41 @@ import React,{useEffect} from 'react';
 
 const addressS = (address,radius) => {
     useEffect(()=>{
+<<<<<<< HEAD
         let container = document.getElementById('map');
         let options = {
             center: new kakao.maps.LatLng(36.7332136, 127.3946865),
             level: 8
         };
         let map = new kakao.maps.Map(container, options);
+=======
+        
+        const container = document.getElementById('map');
+    
+        const options = {
+            center: new kakao.maps.LatLng(36.7332136, 127.3946865),
+            level: 8
+        };
+
+        const map = new kakao.maps.Map(container, options);
+>>>>>>> ce526d2caf5691fff517f8bcbb4a9966fe4201e0
 
 
         // 주소로 좌표를 검색합니다
-        let geocoder = new kakao.maps.services.Geocoder();
+        const geocoder = new kakao.maps.services.Geocoder();
 
         geocoder.addressSearch(address, function (result, status) {
 
             // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
-                let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                 // 결과값으로 받은 위치를 마커로 표시합니다
+<<<<<<< HEAD
                 let marker = new kakao.maps.Marker({
+=======
+                const marker = new kakao.maps.Marker({
+>>>>>>> ce526d2caf5691fff517f8bcbb4a9966fe4201e0
                     map: map,
                     position: coords
                 });
@@ -33,7 +49,7 @@ const addressS = (address,radius) => {
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 
-                if (!isNaN(radius)) { //한글/영어/특수문자등 입력 방지
+                if (!isNaN(radius) && radius!==0) { //한글/영어/특수문자등 입력 방지
 
                     const circle = new kakao.maps.Circle({
 
