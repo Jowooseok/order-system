@@ -11,6 +11,13 @@ const keywordS = (keyword,radius) => {
         };
         const map = new kakao.maps.Map(container, options);
 
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        kakao.maps.event.addListener(map, 'zoom_changed', function() {
+
+            let resultDiv = document.getElementById('result');
+        });
+
         const infowindow = new kakao.maps.InfoWindow({zIndex: 1}); // 마커에 주소표시
         const ps = new kakao.maps.services.Places(); // 키워드 검색
         const geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체 생성

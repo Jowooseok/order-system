@@ -8,6 +8,13 @@ const addressS = (address,radius) => {
         };
         const map = new kakao.maps.Map(container, options);
 
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        kakao.maps.event.addListener(map, 'zoom_changed', function() {
+
+            let resultDiv = document.getElementById('result');
+        });
+
         const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
         // 주소로 좌표를 검색합니다
         const geocoder = new kakao.maps.services.Geocoder();
