@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router';
 import { Menu, Dropdown, Button, Divider, Input, Affix, Col, Row } from 'antd';
 import Link from 'next/link';
-import { StarFilled,EnvironmentFilled } from '@ant-design/icons';
+import { StarFilled, EnvironmentFilled } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -19,15 +19,15 @@ let markers = [];
 let map = null;
 
 const home = () => {
-    const [searchMethod, setSearchMethod] = useState('키워드');
-
     useEffect(() => {
+
         const container = document.getElementById('map');
         const options = {
             center: new kakao.maps.LatLng(36.7332136, 127.3946865),
             level: 8
         };
         map = new kakao.maps.Map(container, options);
+
 
         const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
         // 주소로 좌표를 검색합니다
@@ -36,7 +36,7 @@ const home = () => {
         const ps = new kakao.maps.services.Places(); // 키워드 검색
 
         const zoomControl = new kakao.maps.ZoomControl(); //컨트롤러 생성
-        map.addControl(zoomControl, kakao.maps.ControlPosition.TOPLEFT);
+        map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMLEFT);
 
         a = geocoder;
         i = infowindow;
@@ -111,7 +111,7 @@ const home = () => {
             markers = [];
         }
     }
-
+    
 
     const searchKeyword = (value) => { // 키워드
 
@@ -130,9 +130,6 @@ const home = () => {
                 }
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
                 map.setBounds(bounds);
-            }
-            else {
-                setSearchMethod('주소');
             }
         });
 
@@ -260,19 +257,28 @@ const home = () => {
         changeRadius(3000)
     }
 
+    const zoomIn =()=> {
+        map.setLevel(map.getLevel() - 1);
+    }
+    
+    // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+    const zoomOut =() => {
+        map.setLevel(map.getLevel() + 1);
+    }
+
     return (
         <>
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
             <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
-                <Row style={{ width: '100%', height: '15%' , border:'1px solid', borderColor:'rgb(242,243,245)'}}>
+                <Row style={{ width: '100%', height: '15%', border: '1px solid', borderColor: 'rgb(242,243,245)' }}>
                     <Col style={{ width: '100%', height: '100%' }}>
-                        <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '47%' ,lineHeight:'1px' }}>
-                        <EnvironmentFilled style={{fontSize:'23px',lineHeight:'1px'}} /><span  style={{fontSize:'20px' , lineHeight:'1px',fontFamily: `Grandstander, cursive`, paddingTop:'5px'}}>4Makers<b>Map</b></span>
-                    </Row>
+                        <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '47%', lineHeight: '1px' }}>
+                            <EnvironmentFilled style={{ fontSize: '23px', lineHeight: '1px' }} /><span style={{ fontSize: '20px', lineHeight: '1px', fontFamily: `Grandstander, cursive`, paddingTop: '5px' }}>4Makers<b>Map</b></span>
+                        </Row>
                         <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '53%' }}>
-                            <Input id="keyword" style={{ width: '100%', height:'90%', borderColor: 'white', borderRadius:'10px', margin:'10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
+                            <Input id="keyword" style={{ width: '100%', height: '90%', borderColor: 'white', borderRadius: '10px', margin: '10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
                         </Row>
                     </Col>
 
@@ -282,18 +288,25 @@ const home = () => {
                     </div>
                 </Row>
             </Col>
-            <div style={{fontFamily: `Grandstander, cursive`}}>
+            <div style={{ fontFamily: `Grandstander, cursive` }}>
 
-                <span style={{ position: 'absolute', bottom: '210px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius12}><b>1.2</b></span>
-                <span style={{ position: 'absolute', bottom: '160px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius15}><b>1.5</b></span>
-                <span style={{ position: 'absolute', bottom: '110px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius20}><b>2.0</b></span>
-                <span style={{ position: 'absolute', bottom: '60px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius25}><b>2.5</b></span>
-                <span style={{ position: 'absolute', bottom: '10px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius30}><b>3.0</b></span>
+                <span style={{ position: 'absolute', bottom: '210px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} onClick={enterRadius12}><b>1.2</b></span>
+                <span style={{ position: 'absolute', bottom: '160px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} onClick={enterRadius15}><b>1.5</b></span>
+                <span style={{ position: 'absolute', bottom: '110px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} onClick={enterRadius20}><b>2.0</b></span>
+                <span style={{ position: 'absolute', bottom: '60px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} onClick={enterRadius25}><b>2.5</b></span>
+                <span style={{ position: 'absolute', bottom: '10px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} onClick={enterRadius30}><b>3.0</b></span>
 
             </div>
+            <div >
+                <span onClick={zoomIn} style={{ position: 'absolute', top: '20%', left: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"  width={'15px'} /></span>
+                <span onClick={zoomOut}  style={{ position: 'absolute', top: '29%', left: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"  alt="축소"  width={'15px'} /></span>
+            </div>
+
+
 
         </>
     )
 }
+
 
 export default home;
