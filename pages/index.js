@@ -11,14 +11,15 @@ let b = null;
 let i = null;
 let m = null;
 let p = null;
+let radius = 0;
 let count = 0;
+let nowPosition = null;
 let preCircle = null;
 let markers = [];
+let map = null;
 
 const home = () => {
-    const [radius, setRadius] = useState(0);
     const [searchMethod, setSearchMethod] = useState('키워드');
-    const [map, setMap] = useState();
 
     useEffect(() => {
         const container = document.getElementById('map');
@@ -26,7 +27,7 @@ const home = () => {
             center: new kakao.maps.LatLng(36.7332136, 127.3946865),
             level: 8
         };
-        setMap(new kakao.maps.Map(container, options))
+        map = new kakao.maps.Map(container, options)
 
         const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
         // 주소로 좌표를 검색합니다
@@ -49,6 +50,7 @@ const home = () => {
             if (status === b.Status.OK) {
                 removeMarker();
                 const coords = new kakao.maps.LatLng(result[0].y, result[0].x)
+                nowPosition = coords;
 
                 // // 결과값으로 받은 위치를 마커로 표시합니다
                 const marker = new kakao.maps.Marker({
@@ -143,6 +145,7 @@ const home = () => {
             // 마커에 클릭이벤트를 등록합니다
             kakao.maps.event.addListener(marker, 'click', function () {
                 searchDetailAddrFromCoords(location, function (result, status) {
+                    nowPosition = location;
 
                     if (status === kakao.maps.services.Status.OK) {
 
@@ -159,6 +162,8 @@ const home = () => {
                         if (preCircle) {
                             preCircle.setMap(null);
                         }
+
+                        
 
                         const circle = new kakao.maps.Circle({
                             center: location,  // 원의 중심좌표 입니다
@@ -204,29 +209,48 @@ const home = () => {
             alert('검색어를 입력해주세요!');
             return false;
         }
+        if (preCircle) {
+            preCircle.setMap(null);
+            i.close();
+        }
+
         searchAddress(value);
         searchKeyword(value);
     }
 
-    // const onClickSearchMethod = () => {
-    //     if (searchMethod === '주소') {
-    //         setSearchMethod('키워드')
-    //     } else if (searchMethod === '키워드') {
-    //         setSearchMethod('주소')
-    //     }
-    // }
+    const changeRadius = (value) =>{
+        radius = value;
+        if (preCircle) {
+            preCircle.setMap(null);
+        }
+        if(count===1){
+            const circle = new kakao.maps.Circle({
+                center: new kakao.maps.LatLng(nowPosition.Ha, nowPosition.Ga),  // 원의 중심좌표 입니다
+                radius: value, // 미터 단위의 원의 반지름입니다
+                strokeWeight: 5, // 선의 두께입니다
+                strokeColor: '#75B8FA', // 선의 색깔입니다
+                strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.7  // 채우기 불투명도 입니다
+            });
+            circle.setMap(map)
+            preCircle=circle;
+        }
+    }
 
     const enterRadius15 = () => {
-        setRadius(1500)
+        changeRadius(1500)
     }
     const enterRadius20 = () => {
-        setRadius(2000)
+        changeRadius(2000)
+
     }
     const enterRadius25 = () => {
-        setRadius(2500)
+        changeRadius(2500)
     }
     const enterRadius30 = () => {
-        setRadius(3000)
+        changeRadius(3000)
     }
 
     return (
@@ -240,7 +264,6 @@ const home = () => {
             <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
 
             <div>
-                {/*<Button type={'dashed'} style={{ width: '30%', position: 'absolute', top: '0px' }} onClick={onClickSearchMethod}>{searchMethod}</Button>*/}
                 <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '115px' }} onClick={enterRadius15}>1.5km</Button>
                 <Button type={'danger'} style={{ position: 'absolute', top: '0px', left: '185px' }} onClick={enterRadius20}>2km</Button>
                 <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '245px' }} onClick={enterRadius25}>2.5km</Button>
