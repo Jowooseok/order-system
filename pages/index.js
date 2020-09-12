@@ -35,6 +35,9 @@ const home = () => {
 
         const ps = new kakao.maps.services.Places(); // 키워드 검색
 
+        const zoomControl = new kakao.maps.ZoomControl(); //컨트롤러 생성
+        map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
+
         a = geocoder;
         i = infowindow;
         b = kakao.maps.services;
@@ -261,22 +264,15 @@ const home = () => {
             <div id='map' style={{ height: '100vh', zIndex: 0 }}>
             </div>
 
-            <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
+
+            <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '0px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
 
             <div>
-                <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '115px' }} onClick={enterRadius15}>1.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '0px', left: '185px' }} onClick={enterRadius20}>2km</Button>
-                <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '245px' }} onClick={enterRadius25}>2.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '0px', left: '315px' }} onClick={enterRadius30}>3km</Button>
+                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '0px' }} onClick={enterRadius15}>1.5km</Button>
+                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '70px' }} onClick={enterRadius20}>2km</Button>
+                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '130px' }} onClick={enterRadius25}>2.5km</Button>
+                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '200px' }} onClick={enterRadius30}>3km</Button>
             </div>
-
-            <StarFilled style={{
-                bottom: '300px',
-                right: '1px',
-                color: 'yellow',
-                position: 'absolute',
-                fontSize: '50px'
-            }} onClick={() => { window.location.reload() }} />
         </>
     )
 }
