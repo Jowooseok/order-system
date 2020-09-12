@@ -40,10 +40,7 @@ const home = () => {
 
     const searchKeyword = (value) => { // 키워드
         let keyword = document.getElementById('keyword').value;
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('검색어를 입력해주세요!');
-            return false;
-        }
+
             p.keywordSearch(value, function (data, status, pagination) {
                 // 정상적으로 검색이 완료됐으면
                 if (status === b.Status.OK) {
@@ -116,10 +113,7 @@ const home = () => {
 
     const searchAddress = (value) => { // 주소
         let keyword = document.getElementById('keyword').value;
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('검색어를 입력해주세요!');
-            return false;
-        }
+    
             a.addressSearch(value, function (result, status) {
                 // 정상적으로 검색이 완료됐으면
                 if (status === b.Status.OK) {
@@ -152,11 +146,9 @@ const home = () => {
                             fillColor: '#CFE7FF', // 채우기 색깔입니다
                             fillOpacity: 0.7  // 채우기 불투명도 입니다
                         });
-                        if(!circle){
+                      
                         circle.setMap(map);
-                        }else{
-                        circle.setMap(null);
-                        }
+                      
                     } catch (error) {
                         console.log(error)
                     }
@@ -175,6 +167,10 @@ const home = () => {
 
 
     const searchFuction = (value) => {
+        if (!value.replace(/^\s+|\s+$/g, '')) {
+            alert('검색어를 입력해주세요!');
+            return false;
+        }
         searchAddress(value);
         searchKeyword(value);
     }
