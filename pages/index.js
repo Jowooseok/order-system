@@ -175,12 +175,8 @@ const home = () => {
 
 
     const searchFuction = (value) => {
-        if(searchMethod ==='주소'){
-            searchAddress(value);
-            setSearchMethod('키워드');
-        }else{
-            searchKeyword(value);
-        }
+        searchAddress(value);
+        searchKeyword(value);
     }
 
     // const onClickSearchMethod = () => {
@@ -212,7 +208,7 @@ const home = () => {
             <div id='map' style={{ height: '100vh', zIndex: 0 }}>
             </div>
 
-            <Search id = "keyword"  style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} onPressEnter={searchFuction} enterButton />
+            <Search id = "keyword"  style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
 
             <div>
                 {/*<Button type={'dashed'} style={{ width: '30%', position: 'absolute', top: '0px' }} onClick={onClickSearchMethod}>{searchMethod}</Button>*/}
