@@ -14,11 +14,11 @@ let p = null;
 let count = 0;
 let preCircle = null;
 let markers = [];
+let map = null;
 
 const home = () => {
     const [radius, setRadius] = useState(0);
     const [searchMethod, setSearchMethod] = useState('키워드');
-    const [map, setMap] = useState();
 
     useEffect(() => {
         const container = document.getElementById('map');
@@ -26,13 +26,16 @@ const home = () => {
             center: new kakao.maps.LatLng(36.7332136, 127.3946865),
             level: 8
         };
-        setMap(new kakao.maps.Map(container, options))
+        map = new kakao.maps.Map(container, options);
 
         const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
         // 주소로 좌표를 검색합니다
         const geocoder = new kakao.maps.services.Geocoder(); //주소 검색
 
         const ps = new kakao.maps.services.Places(); // 키워드 검색
+
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
 
         a = geocoder;
         i = infowindow;
@@ -237,23 +240,16 @@ const home = () => {
             <div id='map' style={{ height: '100vh', zIndex: 0 }}>
             </div>
 
-            <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '32px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
+
+            <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '0px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
 
             <div>
-                {/*<Button type={'dashed'} style={{ width: '30%', position: 'absolute', top: '0px' }} onClick={onClickSearchMethod}>{searchMethod}</Button>*/}
-                <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '115px' }} onClick={enterRadius15}>1.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '0px', left: '185px' }} onClick={enterRadius20}>2km</Button>
-                <Button type={'primary'} style={{ position: 'absolute', top: '0px', left: '245px' }} onClick={enterRadius25}>2.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '0px', left: '315px' }} onClick={enterRadius30}>3km</Button>
+                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '0px' }} onClick={enterRadius15}>1.5km</Button>
+                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '70px' }} onClick={enterRadius20}>2km</Button>
+                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '130px' }} onClick={enterRadius25}>2.5km</Button>
+                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '200px' }} onClick={enterRadius30}>3km</Button>
             </div>
 
-            <StarFilled style={{
-                bottom: '300px',
-                right: '1px',
-                color: 'yellow',
-                position: 'absolute',
-                fontSize: '50px'
-            }} onClick={() => { window.location.reload() }} />
         </>
     )
 }
