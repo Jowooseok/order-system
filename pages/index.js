@@ -82,7 +82,7 @@ const home = () => {
                         fillColor: '#CFE7FF', // 채우기 색깔입니다
                         fillOpacity: 0.7  // 채우기 불투명도 입니다
                     });
-                    
+
                     if (count === 0) {
                         count = 1;
                         i.open(map, marker);
@@ -166,7 +166,7 @@ const home = () => {
                             preCircle.setMap(null);
                         }
 
-                        
+
 
                         const circle = new kakao.maps.Circle({
                             center: location,  // 원의 중심좌표 입니다
@@ -221,12 +221,12 @@ const home = () => {
         searchKeyword(value);
     }
 
-    const changeRadius = (value) =>{
+    const changeRadius = (value) => {
         radius = value;
         if (preCircle) {
             preCircle.setMap(null);
         }
-        if(count===1){
+        if (count === 1) {
             const circle = new kakao.maps.Circle({
                 center: new kakao.maps.LatLng(nowPosition.Ha, nowPosition.Ga),  // 원의 중심좌표 입니다
                 radius: value, // 미터 단위의 원의 반지름입니다
@@ -238,7 +238,7 @@ const home = () => {
                 fillOpacity: 0.7  // 채우기 불투명도 입니다
             });
             circle.setMap(map)
-            preCircle=circle;
+            preCircle = circle;
         }
     }
 
@@ -261,18 +261,22 @@ const home = () => {
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
-            <div id='map' style={{ height: '100vh', zIndex: 0 }}>
-            </div>
 
-
-            <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '0px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
 
             <div>
+
+                <div id='map' style={{ height: '100%', width:'100%', position:'fixed', zIndex: 0 }}>
+                </div>
+                <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '0px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
+
+
                 <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '0px' }} onClick={enterRadius15}>1.5km</Button>
                 <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '70px' }} onClick={enterRadius20}>2km</Button>
                 <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '130px' }} onClick={enterRadius25}>2.5km</Button>
                 <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '200px' }} onClick={enterRadius30}>3km</Button>
+
             </div>
+
         </>
     )
 }

@@ -4,7 +4,7 @@
   "description": "pratice",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 4000",
+    "dev": "next",
     "build": "next build"
   },
   "repository": {
