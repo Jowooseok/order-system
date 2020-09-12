@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router';
-import { Menu, Dropdown, Button, Divider, Input, Affix } from 'antd';
+import { Menu, Dropdown, Button, Divider, Input, Affix, Col, Row } from 'antd';
 import Link from 'next/link';
-import { StarFilled } from '@ant-design/icons';
+import { StarFilled,EnvironmentFilled } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -36,7 +36,7 @@ const home = () => {
         const ps = new kakao.maps.services.Places(); // 키워드 검색
 
         const zoomControl = new kakao.maps.ZoomControl(); //컨트롤러 생성
-        map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
+        map.addControl(zoomControl, kakao.maps.ControlPosition.TOPLEFT);
 
         a = geocoder;
         i = infowindow;
@@ -206,7 +206,8 @@ const home = () => {
         }
     }
 
-    const searchFuction = (value) => {
+    const searchFuction = (e) => {
+        const value = e.target.value
         count = 0;
         if (!value.replace(/^\s+|\s+$/g, '')) {
             alert('검색어를 입력해주세요!');
@@ -242,6 +243,9 @@ const home = () => {
         }
     }
 
+    const enterRadius12 = () => {
+        changeRadius(1200)
+    }
     const enterRadius15 = () => {
         changeRadius(1500)
     }
@@ -261,19 +265,30 @@ const home = () => {
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
 
+            <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
+                <Row style={{ width: '100%', height: '15%' , border:'1px solid', borderColor:'rgb(242,243,245)'}}>
+                    <Col style={{ width: '100%', height: '100%' }}>
+                        <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '47%' ,lineHeight:'1px' }}>
+                        <EnvironmentFilled style={{fontSize:'23px',lineHeight:'1px'}} /><span  style={{fontSize:'20px' , lineHeight:'1px',fontFamily: `Grandstander, cursive`, paddingTop:'5px'}}>4Makers<b>Map</b></span>
+                    </Row>
+                        <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '53%' }}>
+                            <Input id="keyword" style={{ width: '100%', height:'90%', borderColor: 'white', borderRadius:'10px', margin:'10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
+                        </Row>
+                    </Col>
 
+                </Row>
+                <Row style={{ width: '100%', height: '85%' }}>
+                    <div id='map' style={{ height: '100%', width: '100%' }}>
+                    </div>
+                </Row>
+            </Col>
+            <div >
 
-            <div>
-
-                <div id='map' style={{ height: '100%', width:'100%', position:'fixed', zIndex: 0 }}>
-                </div>
-                <Search id="keyword" style={{ width: '100%', position: 'absolute', top: '0px' }} placeholder={'입력해주세요'} onSearch={searchFuction} enterButton />
-
-
-                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '0px' }} onClick={enterRadius15}>1.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '70px' }} onClick={enterRadius20}>2km</Button>
-                <Button type={'primary'} style={{ position: 'absolute', top: '32px', left: '130px' }} onClick={enterRadius25}>2.5km</Button>
-                <Button type={'danger'} style={{ position: 'absolute', top: '32px', left: '200px' }} onClick={enterRadius30}>3km</Button>
+                <span style={{ position: 'absolute', bottom: '210px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius12}><b>1.2</b></span>
+                <span style={{ position: 'absolute', bottom: '160px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius15}><b>1.5</b></span>
+                <span style={{ position: 'absolute', bottom: '110px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius20}><b>2.0</b></span>
+                <span style={{ position: 'absolute', bottom: '60px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius25}><b>2.5</b></span>
+                <span style={{ position: 'absolute', bottom: '10px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius30}><b>3.0</b></span>
 
             </div>
 
