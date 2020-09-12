@@ -282,7 +282,7 @@ const home = () => {
                     </div>
                 </Row>
             </Col>
-            <div >
+            <div style={{fontFamily: `Grandstander, cursive`}}>
 
                 <span style={{ position: 'absolute', bottom: '210px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius12}><b>1.2</b></span>
                 <span style={{ position: 'absolute', bottom: '160px', right: '5px', border:'1px solid', borderRadius:'50%' , padding:'10px', backgroundColor:'white', borderColor:'rgb(242,243,245)', color:'rgb(94,94,94)'}} onClick={enterRadius15}><b>1.5</b></span>
