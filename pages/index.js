@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router';
-import { Menu, Dropdown, Button, Divider, Input, Affix, Col, Row } from 'antd';
+import { Input, Col, Row, Drawer, List, Modal } from 'antd';
 import Link from 'next/link';
-import { StarFilled, EnvironmentFilled, MenuOutlined } from '@ant-design/icons';
+import { StarFilled, EnvironmentFilled, MenuOutlined, EditFilled, DeleteFilled } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -18,7 +18,12 @@ let preCircle = null;
 let markers = [];
 let map = null;
 
+
 const home = () => {
+    const [visibleD, setVisibleD] = useState(false);
+    const [visibleEdit, setVisibleEdit] = useState(false);
+    const [visibleDelete, setVisibleDelete] = useState(false);
+
     useEffect(() => {
 
         const container = document.getElementById('map');
@@ -111,7 +116,7 @@ const home = () => {
             markers = [];
         }
     }
-    
+
 
     const searchKeyword = (value) => { // 키워드
 
@@ -257,16 +262,75 @@ const home = () => {
         changeRadius(3000)
     }
 
-    const zoomIn =()=> {
+    const zoomIn = () => {
         map.setLevel(map.getLevel() - 1);
     }
-    
+
     // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-    const zoomOut =() => {
+    const zoomOut = () => {
         map.setLevel(map.getLevel() + 1);
     }
 
     //즐겨찾기 작업 시작
+    const data = [
+        {
+            id: 1,
+            title: '우석집',
+            address: '청주시 복대동 1884 진영빌',
+            latitude: 37,
+            longitude: 127,
+        },
+        {
+            id: 2,
+            title: '수웅집',
+            address: '청주시 복대동 1884 진영빌',
+            latitude: 37,
+            longitude: 130,
+        },
+        {
+            id: 3,
+            title: '경민집',
+            address: '청주시 복대동 1884 진영빌',
+            latitude: 36,
+            longitude: 127,
+        },
+    ];
+
+    //Drwer
+    const showDrawer = () => {
+        setVisibleD(true);
+    };
+    const onClose = () => {
+        setVisibleD(false);
+    };
+
+    //dancelModal
+    const showDeleteModal = (id) => () => {
+        setVisibleDelete(true)
+        console.log(id)
+    }
+    const deleteHandleOk = () => {
+        setVisibleDelete(false)
+    }
+    const deleteHandleCancel = e => {
+        setVisibleDelete(false)
+    }
+
+    //editModal
+    const showEditModal = (id) => () => {
+        setVisibleEdit(true)
+        console.log(id)
+    }
+    const editHandleOk = () => {
+        setVisibleEdit(false)
+    }
+    const editlHandleCancel = e => {
+        setVisibleEdit(false)
+    }
+
+    const moveToAddress = (latitude, longitude) => () => { //주소 클릭시 맵 이동
+        map.setCenter(new kakao.maps.LatLng(latitude, longitude))
+    }
 
     return (
         <>
@@ -300,9 +364,52 @@ const home = () => {
 
             </div>
             <div >
-            <MenuOutlined style={{fontSize:'23px', position:'absolute', right:'10px', top:'15px'}} />
-                <span onClick={zoomIn} style={{ position: 'absolute', top: '145px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"  width={'15px'} /></span>
-                <span onClick={zoomOut}  style={{ position: 'absolute', top: '195px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"  alt="축소"  width={'15px'} /></span>
+                <MenuOutlined style={{ fontSize: '23px', position: 'absolute', right: '10px', top: '15px' }} onClick={showDrawer} />
+                <Drawer
+                    title={[<StarFilled style={{ color: 'RGB(250,225,0)', fontSize: '20px' }} />, <span style={{ fontSize: '16px' }}>즐겨찾기</span>]}
+                    placement="right"
+                    closable={false}
+                    onClose={onClose}
+                    visible={visibleD}
+                >
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={item => (
+                            <List.Item
+                                actions={[<EditFilled onClick={showDeleteModal(item.id)}/>, <DeleteFilled onClick={showEditModal(item.id)} />]}
+                            >
+                                <List.Item.Meta
+                                    title={<a href="https://ant.design">{item.title}</a>}
+                                    description={[<span onClick={moveToAddress(item.latitude, item.longitude)}>{item.address}</span>]}
+                                />
+
+                            </List.Item>
+                        )}
+                    />,
+                </Drawer>
+                <Modal
+                    title="즐겨찾기 수정"
+                    visible={visibleDelete}
+                    onOk={deleteHandleOk}
+                    onCancel={deleteHandleCancel}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+                <Modal
+                    title="즐겨찾기 삭제"
+                    visible={visibleEdit}
+                    onOk={editHandleOk}
+                    onCancel={editlHandleCancel}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+                <span onClick={zoomIn} style={{ position: 'absolute', top: '145px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대" width={'15px'} /></span>
+                <span onClick={zoomOut} style={{ position: 'absolute', top: '195px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소" width={'15px'} /></span>
             </div>
 
         </>
