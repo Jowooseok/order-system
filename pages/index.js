@@ -173,7 +173,7 @@ const home = () => {
                             preCircle.setMap(null);
                         }
 
-                        addAddress = result[0].road_address.address_name;
+                        addAddress = result[0].address.address_name;
 
 
 
