@@ -111,7 +111,7 @@ const home = () => {
             markers = [];
         }
     }
-    
+
 
     const searchKeyword = (value) => { // 키워드
 
@@ -257,12 +257,12 @@ const home = () => {
         changeRadius(3000)
     }
 
-    const zoomIn =()=> {
+    const zoomIn = () => {
         map.setLevel(map.getLevel() - 1);
     }
-    
+
     // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-    const zoomOut =() => {
+    const zoomOut = () => {
         map.setLevel(map.getLevel() + 1);
     }
 
@@ -272,6 +272,8 @@ const home = () => {
         <>
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
+            <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+
 
             <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
                 <Row style={{ width: '100%', height: '15%', border: '1px solid', borderColor: 'rgb(242,243,245)' }}>
@@ -300,9 +302,10 @@ const home = () => {
 
             </div>
             <div >
-            <MenuOutlined style={{fontSize:'23px', position:'absolute', right:'10px', top:'15px'}} />
-                <span onClick={zoomIn} style={{ position: 'absolute', top: '145px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"  width={'15px'} /></span>
-                <span onClick={zoomOut}  style={{ position: 'absolute', top: '195px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"  alt="축소"  width={'15px'} /></span>
+                <MenuOutlined style={{ fontSize: '23px', position: 'absolute', right: '10px', top: '15px' }} />
+                <span onClick={zoomIn} style={{ position: 'absolute', top: '120px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대" width={'15px'} /></span>
+
+                <span onClick={zoomOut} style={{ position: 'absolute', top: '170px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소" width={'15px'} /></span>
             </div>
 
         </>
