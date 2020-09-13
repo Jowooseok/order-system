@@ -17,6 +17,7 @@ let nowPosition = null;
 let preCircle = null;
 let markers = [];
 let map = null;
+let addAddress = '';
 
 
 const home = () => {
@@ -26,6 +27,7 @@ const home = () => {
     const [visibleAdd, setVisibleAdd] = useState(false);
     const [changeEdit, setChangeEdit] = useState('');
     const [changeAdd, setChangeAdd] = useState('');
+    const [addressId, setAddresId] = useState(null);
 
     useEffect(() => {
 
@@ -75,7 +77,7 @@ const home = () => {
                     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                     let content = '<div style="padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">' + result[0].address.address_name + '</div>';
                     i.setContent(content);
-
+                    addAddress = result[0].road_address.address_name;
                     if (preCircle) {
                         preCircle.setMap(null);
                     }
@@ -170,6 +172,8 @@ const home = () => {
                         if (preCircle) {
                             preCircle.setMap(null);
                         }
+
+                        addAddress = result[0].road_address.address_name;
 
 
 
@@ -311,10 +315,12 @@ const home = () => {
     //dancelModal
     const showDeleteModal = (id) => () => {
         setVisibleDelete(true)
-        console.log(id)
+        setAddresId(id);
     }
     const deleteHandleOk = () => {  //서버로 삭제요청 보내기 로직 실행
         setVisibleDelete(false)
+        console.log(addressId)
+        setAddresId(null);
     }
     const deleteHandleCancel = e => {
         setVisibleDelete(false)
@@ -323,10 +329,12 @@ const home = () => {
     //editModal
     const showEditModal = (id) => () => {
         setVisibleEdit(true)
-        console.log(id)
+        setAddresId(id);
     }
     const editHandleOk = () => { //서버로 수정요청 보내기 로직 실행
         setVisibleEdit(false)
+        console.log(addressId)
+        setAddresId(null);
     }
     const editlHandleCancel = e => {
         setVisibleEdit(false)
@@ -343,6 +351,7 @@ const home = () => {
     }
     const addHandleOk = () => { //서버로 수정요청 보내기 로직 실행
         setVisibleAdd(false)
+        console.log(nowPosition,addAddress,changeAdd)
     }
     const addHandleCancel = e => {
         setVisibleAdd(false)
@@ -353,7 +362,6 @@ const home = () => {
         if(count === 0){
             alert('즐겨찾기할 장소를 선택해주세요!')
         }else{
-            console.log('hi')
             showAddModal()
         }
     }
@@ -363,7 +371,7 @@ const home = () => {
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
                 
-                <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+                <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" /> 
             <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
                 <Row style={{ width: '100%', height: '15%', border: '1px solid', borderColor: 'rgb(242,243,245)' }}>
                     <Col style={{ width: '100%', height: '100%' }}>
