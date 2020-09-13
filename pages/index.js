@@ -23,6 +23,9 @@ const home = () => {
     const [visibleD, setVisibleD] = useState(false);
     const [visibleEdit, setVisibleEdit] = useState(false);
     const [visibleDelete, setVisibleDelete] = useState(false);
+    const [visibleAdd, setVisibleAdd] = useState(false);
+    const [changeEdit, setChangeEdit] = useState('');
+    const [changeAdd, setChangeAdd] = useState('');
 
     useEffect(() => {
 
@@ -102,7 +105,7 @@ const home = () => {
 
 
                 });
-
+                console.log(count)
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
@@ -190,6 +193,7 @@ const home = () => {
                             count = 0;
                             circle.setMap(null);
                         }
+                        console.log(count)
 
                         preCircle = circle;
                     }
@@ -309,7 +313,7 @@ const home = () => {
         setVisibleDelete(true)
         console.log(id)
     }
-    const deleteHandleOk = () => {
+    const deleteHandleOk = () => {  //서버로 삭제요청 보내기 로직 실행
         setVisibleDelete(false)
     }
     const deleteHandleCancel = e => {
@@ -321,7 +325,7 @@ const home = () => {
         setVisibleEdit(true)
         console.log(id)
     }
-    const editHandleOk = () => {
+    const editHandleOk = () => { //서버로 수정요청 보내기 로직 실행
         setVisibleEdit(false)
     }
     const editlHandleCancel = e => {
@@ -332,11 +336,34 @@ const home = () => {
         map.setCenter(new kakao.maps.LatLng(latitude, longitude))
     }
 
+    //addModal
+    const showAddModal = () => {
+        setVisibleAdd(true)
+  
+    }
+    const addHandleOk = () => { //서버로 수정요청 보내기 로직 실행
+        setVisibleAdd(false)
+    }
+    const addHandleCancel = e => {
+        setVisibleAdd(false)
+    }
+
+    //즐겨찾기 추가
+    const onClickFavorites = () => {
+        if(count === 0){
+            alert('즐겨찾기할 장소를 선택해주세요!')
+        }else{
+            console.log('hi')
+            showAddModal()
+        }
+    }
+
     return (
         <>
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
-
+                
+                <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
             <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
                 <Row style={{ width: '100%', height: '15%', border: '1px solid', borderColor: 'rgb(242,243,245)' }}>
                     <Col style={{ width: '100%', height: '100%' }}>
@@ -377,7 +404,7 @@ const home = () => {
                         dataSource={data}
                         renderItem={item => (
                             <List.Item
-                                actions={[<EditFilled onClick={showDeleteModal(item.id)}/>, <DeleteFilled onClick={showEditModal(item.id)} />]}
+                                actions={[<EditFilled onClick={showDeleteModal(item.id)} />, <DeleteFilled onClick={showEditModal(item.id)} />]}
                             >
                                 <List.Item.Meta
                                     title={<a href="https://ant.design">{item.title}</a>}
@@ -394,9 +421,7 @@ const home = () => {
                     onOk={deleteHandleOk}
                     onCancel={deleteHandleCancel}
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <Input placeholder={'입력해주세요'} onChange={(e) => setChangeEdit(e.target.value)} />
                 </Modal>
                 <Modal
                     title="즐겨찾기 삭제"
@@ -404,14 +429,23 @@ const home = () => {
                     onOk={editHandleOk}
                     onCancel={editlHandleCancel}
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <p>정말로 삭제하시겠습니까?</p>
                 </Modal>
-                <span onClick={zoomIn} style={{ position: 'absolute', top: '145px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대" width={'15px'} /></span>
-                <span onClick={zoomOut} style={{ position: 'absolute', top: '195px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소" width={'15px'} /></span>
+                <Modal
+                    title="즐겨찾기 추가"
+                    visible={visibleAdd}
+                    onOk={addHandleOk}
+                    onCancel={addHandleCancel}
+                >
+                    <Input placeholder={'저장할 명칭을 입력해주세요'} onChange={(e) => setChangeAdd(e.target.value)} />
+                </Modal>
+                <span onClick={zoomIn} style={{ position: 'absolute', top: '120px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대" width={'15px'} /></span>
+                <span onClick={zoomOut} style={{ position: 'absolute', top: '170px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소" width={'15px'} /></span>
             </div>
 
+          
+            <StarFilled style={{ position: 'absolute',top: '56%', left: '5px', fontSize: '20px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'RGB(250,225,0)' }} onClick={onClickFavorites} />
+       
         </>
     )
 }
