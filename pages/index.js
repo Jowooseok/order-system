@@ -35,8 +35,8 @@ const home = () => {
 
         const ps = new kakao.maps.services.Places(); // 키워드 검색
 
-        const zoomControl = new kakao.maps.ZoomControl(); //컨트롤러 생성
-        map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMLEFT);
+        // const zoomControl = new kakao.maps.ZoomControl(); //컨트롤러 생성
+        // map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMLEFT);
 
         a = geocoder;
         i = infowindow;
@@ -298,8 +298,8 @@ const home = () => {
 
             </div>
             <div >
-                <span onClick={zoomIn} style={{ position: 'absolute', top: '20%', left: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"  width={'15px'} /></span>
-                <span onClick={zoomOut}  style={{ position: 'absolute', top: '29%', left: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"  alt="축소"  width={'15px'} /></span>
+                <span onClick={zoomIn} style={{ position: 'absolute', top: '160px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"  width={'15px'} /></span>
+                <span onClick={zoomOut}  style={{ position: 'absolute', top: '210px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"  alt="축소"  width={'15px'} /></span>
             </div>
 
 
