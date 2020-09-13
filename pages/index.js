@@ -290,17 +290,17 @@ const home = () => {
         },
         {
             id: 2,
-            title: '수웅집',
-            address: '청주시 복대동 1884 진영빌',
-            latitude: 37,
-            longitude: 130,
+            title: '청주대학교',
+            address: '청주시 청주시 청원구 상당로 204',
+            latitude: 36.652437724308726,
+            longitude: 127.49590958066037,
         },
         {
             id: 3,
-            title: '경민집',
-            address: '청주시 복대동 1884 진영빌',
-            latitude: 36,
-            longitude: 127,
+            title: '대전광역시청',
+            address: '대전광역시 유성구 대학로 99',
+            latitude: 36.350493948907236,
+            longitude: 127.38480120442213,
         },
     ];
 
