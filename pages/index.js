@@ -4,6 +4,7 @@ import { Input, Col, Row, Drawer, List, Modal } from 'antd';
 import Link from 'next/link';
 import { StarFilled, EnvironmentFilled, MenuOutlined, EditFilled, DeleteFilled } from '@ant-design/icons';
 
+
 const { Search } = Input;
 
 let a = null;
@@ -88,11 +89,19 @@ const home = () => {
 
         function displayMarker(place) {
             // 마커를 생성하고 지도에 표시합니다
+
+            const imageSrc = "/redmarker.png"
+            const imageSize = new kakao.maps.Size(34, 39);
+            const imageOption = {offset: new kakao.maps.Point(27, 69)}
+
+            const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
             const marker = new kakao.maps.Marker({
                 map: map,
-                position: new kakao.maps.LatLng(place.latitude, place.longitude)
+                position: new kakao.maps.LatLng(place.latitude, place.longitude),
+                image: markerImage,
             });
-            markers.push(marker);
+            
             const location = new kakao.maps.LatLng(place.latitude, place.longitude);
 
             // 마커에 클릭이벤트를 등록합니다
