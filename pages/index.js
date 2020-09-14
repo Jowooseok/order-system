@@ -19,6 +19,29 @@ let markers = [];
 let map = null;
 let addAddress = '';
 
+const data = [
+    {
+        id: 1,
+        title: '우석집',
+        address: '청주시 복대동 1884 진영빌',
+        latitude: 37,
+        longitude: 127,
+    },
+    {
+        id: 2,
+        title: '청주대학교',
+        address: '청주시 청주시 청원구 상당로 204',
+        latitude: 36.652437724308726,
+        longitude: 127.49590958066037,
+    },
+    {
+        id: 3,
+        title: '대전광역시청',
+        address: '대전광역시 유성구 대학로 99',
+        latitude: 36.350493948907236,
+        longitude: 127.38480120442213,
+    },
+];
 
 const home = () => {
     const [visibleD, setVisibleD] = useState(false);
@@ -38,7 +61,6 @@ const home = () => {
         };
         map = new kakao.maps.Map(container, options);
 
-
         const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
         // 주소로 좌표를 검색합니다
         const geocoder = new kakao.maps.services.Geocoder(); //주소 검색
@@ -52,6 +74,83 @@ const home = () => {
         i = infowindow;
         b = kakao.maps.services;
         p = ps;
+
+        const favoriteBounds = new kakao.maps.LatLngBounds();
+
+  
+
+        for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            favoriteBounds.extend(new kakao.maps.LatLng(data[i].latitude, data[i].longitude));
+        }
+
+        map.setBounds(favoriteBounds);
+
+        function displayMarker(place) {
+            // 마커를 생성하고 지도에 표시합니다
+            const marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.latitude, place.longitude)
+            });
+            markers.push(marker);
+            const location = new kakao.maps.LatLng(place.latitude, place.longitude);
+
+            // 마커에 클릭이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'click', function () {
+                searchDetailAddrFromCoords(location, function (result, status) {
+                    nowPosition = location;
+
+                    if (status === kakao.maps.services.Status.OK) {
+
+                        let detailAddr = result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                        detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                        let content = '<div style="padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">' +
+                            '<span class="title">' + place.title + '</span>' +
+                            detailAddr +
+                            '</div>';
+                        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                        i.setContent(content);
+
+                        if (preCircle) {
+                            preCircle.setMap(null);
+                        }
+
+               
+                        const circle = new kakao.maps.Circle({
+                            center: location,  // 원의 중심좌표 입니다
+                            radius: radius, // 미터 단위의 원의 반지름입니다
+                            strokeWeight: 5, // 선의 두께입니다
+                            strokeColor: '#75B8FA', // 선의 색깔입니다
+                            strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle: 'dashed', // 선의 스타일 입니다
+                            fillColor: '#CFE7FF', // 채우기 색깔입니다
+                            fillOpacity: 0.7  // 채우기 불투명도 입니다
+                        });
+
+                        i.open(map, marker);
+                        circle.setMap(map);
+
+                        if (count === 0) {
+                            count = 1;
+                            i.open(map, marker);
+                            circle.setMap(map);
+                        } else {
+                            i.close();
+                            count = 0;
+                            circle.setMap(null);
+                        }
+                        console.log(count)
+
+                        preCircle = circle;
+                    }
+                });
+            });
+        }
+        function searchDetailAddrFromCoords(coords, callback) {
+            // 좌표로 법정동 상세 주소 정보를 요청합니다
+            a.coord2Address(coords.getLng(), coords.getLat(), callback);
+        }
+
     }, [])
 
     const searchAddress = (value) => { // 주소
@@ -195,7 +294,7 @@ const home = () => {
                         } else {
                             i.close();
                             count = 0;
-                            circle.setMap(null);
+                            
                         }
                         console.log(count)
 
@@ -280,29 +379,6 @@ const home = () => {
     }
 
     //즐겨찾기 작업 시작
-    const data = [
-        {
-            id: 1,
-            title: '우석집',
-            address: '청주시 복대동 1884 진영빌',
-            latitude: 37,
-            longitude: 127,
-        },
-        {
-            id: 2,
-            title: '청주대학교',
-            address: '청주시 청주시 청원구 상당로 204',
-            latitude: 36.652437724308726,
-            longitude: 127.49590958066037,
-        },
-        {
-            id: 3,
-            title: '대전광역시청',
-            address: '대전광역시 유성구 대학로 99',
-            latitude: 36.350493948907236,
-            longitude: 127.38480120442213,
-        },
-    ];
 
     //Drwer
     const showDrawer = () => {
