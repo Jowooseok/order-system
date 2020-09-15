@@ -78,8 +78,6 @@ const home = () => {
 
         const favoriteBounds = new kakao.maps.LatLngBounds();
 
-  
-
         for (let i = 0; i < data.length; i++) {
             displayMarker(data[i]);
             favoriteBounds.extend(new kakao.maps.LatLng(data[i].latitude, data[i].longitude));
@@ -124,16 +122,15 @@ const home = () => {
                             preCircle.setMap(null);
                         }
 
-               
                         const circle = new kakao.maps.Circle({
                             center: location,  // 원의 중심좌표 입니다
                             radius: radius, // 미터 단위의 원의 반지름입니다
                             strokeWeight: 5, // 선의 두께입니다
                             strokeColor: '#75B8FA', // 선의 색깔입니다
-                            strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                             strokeStyle: 'dashed', // 선의 스타일 입니다
                             fillColor: '#CFE7FF', // 채우기 색깔입니다
-                            fillOpacity: 0.7  // 채우기 불투명도 입니다
+                            fillOpacity: 0.3  // 채우기 불투명도 입니다
                         });
 
                         i.open(map, marker);
@@ -179,6 +176,7 @@ const home = () => {
                     position: coords
                 })
                 markers.push(marker);
+                map.setLevel(5);
                 //인포윈도우로 장소에 대한 설명을 표시합니다
                 kakao.maps.event.addListener(marker, 'click', function () {
 
@@ -195,10 +193,10 @@ const home = () => {
                         radius: radius, // 미터 단위의 원의 반지름입니다
                         strokeWeight: 5, // 선의 두께입니다
                         strokeColor: '#75B8FA', // 선의 색깔입니다
-                        strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                         strokeStyle: 'dashed', // 선의 스타일 입니다
                         fillColor: '#CFE7FF', // 채우기 색깔입니다
-                        fillOpacity: 0.7  // 채우기 불투명도 입니다
+                        fillOpacity: 0.3  // 채우기 불투명도 입니다
                     });
 
                     if (count === 0) {
@@ -212,8 +210,6 @@ const home = () => {
                     }
 
                     preCircle = circle;
-
-
                 });
                 console.log(count)
 
@@ -229,7 +225,6 @@ const home = () => {
             markers = [];
         }
     }
-
 
     const searchKeyword = (value) => { // 키워드
 
@@ -276,24 +271,21 @@ const home = () => {
                         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                         i.setContent(content);
 
-
                         if (preCircle) {
                             preCircle.setMap(null);
                         }
 
                         addAddress = result[0].address.address_name;
 
-
-
                         const circle = new kakao.maps.Circle({
                             center: location,  // 원의 중심좌표 입니다
                             radius: radius, // 미터 단위의 원의 반지름입니다
                             strokeWeight: 5, // 선의 두께입니다
                             strokeColor: '#75B8FA', // 선의 색깔입니다
-                            strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                             strokeStyle: 'dashed', // 선의 스타일 입니다
                             fillColor: '#CFE7FF', // 채우기 색깔입니다
-                            fillOpacity: 0.7  // 채우기 불투명도 입니다
+                            fillOpacity: 0.3  // 채우기 불투명도 입니다
                         });
 
                         if (count === 0) {
@@ -351,10 +343,10 @@ const home = () => {
                 radius: value, // 미터 단위의 원의 반지름입니다
                 strokeWeight: 5, // 선의 두께입니다
                 strokeColor: '#75B8FA', // 선의 색깔입니다
-                strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                 strokeStyle: 'dashed', // 선의 스타일 입니다
                 fillColor: '#CFE7FF', // 채우기 색깔입니다
-                fillOpacity: 0.7  // 채우기 불투명도 입니다
+                fillOpacity: 0.3  // 채우기 불투명도 입니다
             });
             circle.setMap(map)
             preCircle = circle;
@@ -369,7 +361,6 @@ const home = () => {
     }
     const enterRadius20 = () => {
         changeRadius(2000)
-
     }
     const enterRadius25 = () => {
         changeRadius(2500)
@@ -378,11 +369,10 @@ const home = () => {
         changeRadius(3000)
     }
 
+    // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
     const zoomIn = () => {
         map.setLevel(map.getLevel() - 1);
     }
-
-    // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
     const zoomOut = () => {
         map.setLevel(map.getLevel() + 1);
     }
@@ -464,7 +454,7 @@ const home = () => {
                             <EnvironmentFilled style={{ fontSize: '23px', lineHeight: '1px' }} /><span style={{ fontSize: '20px', lineHeight: '1px', fontFamily: `Grandstander, cursive`, paddingTop: '5px' }}>4Makers<b>Map</b></span>
                         </Row>
                         <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '53%' }}>
-                            <Input id="keyword" style={{ width: '100%', height: '90%', borderColor: 'white', borderRadius: '10px', margin: '10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
+                            <Input id="keyword" style={{ width: '100%', height: '90%', borderColor: 'white', borderRadius: '10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
                         </Row>
                     </Col>
 
