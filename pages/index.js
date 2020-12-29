@@ -90,7 +90,7 @@ const home = () => {
 
             const imageSrc = "/redmarker.png"
             const imageSize = new kakao.maps.Size(34, 39);
-            const imageOption = {offset: new kakao.maps.Point(27, 69)}
+            const imageOption = { offset: new kakao.maps.Point(27, 69) }
 
             const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
@@ -99,7 +99,7 @@ const home = () => {
                 position: new kakao.maps.LatLng(place.latitude, place.longitude),
                 image: markerImage,
             });
-            
+
             const location = new kakao.maps.LatLng(place.latitude, place.longitude);
 
             // 마커에 클릭이벤트를 등록합니다
@@ -115,6 +115,19 @@ const home = () => {
                             '<span class="title">' + place.title + '</span>' +
                             detailAddr +
                             '</div>';
+
+                        if (window.postAddres && window.postAddres.postMessage) {
+            
+                           postAddres.postMessage(result[0].address.address_name+'');
+                
+                        }
+                        if (window.placetitle && window.placetitle.postMessage) {
+            
+                            placetitle.postMessage(place.title+'');
+                 
+                         }
+
+
                         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                         i.setContent(content);
 
@@ -145,7 +158,7 @@ const home = () => {
                             count = 0;
                             circle.setMap(null);
                         }
-                        console.log(count)
+                     
 
                         preCircle = circle;
                     }
@@ -158,6 +171,8 @@ const home = () => {
         }
 
     }, [])
+
+
 
     const searchAddress = (value) => { // 주소
 
@@ -183,7 +198,13 @@ const home = () => {
                     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                     let content = '<div style="padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">' + result[0].address.address_name + '</div>';
                     i.setContent(content);
-                    addAddress = result[0].road_address.address_name;
+
+                    if (window.postAddres && window.postAddres.postMessage) {
+            
+                        postAddres.postMessage(result[0].address.address_name+'');
+             
+                     }
+       
                     if (preCircle) {
                         preCircle.setMap(null);
                     }
@@ -211,11 +232,13 @@ const home = () => {
 
                     preCircle = circle;
                 });
-                console.log(count)
+         
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
                 return;
+            }else{
+                searchKeyword(value);
             }
         });
         function removeMarker() {
@@ -268,6 +291,23 @@ const home = () => {
                             '<span class="title">' + place.place_name + '</span>' +
                             detailAddr +
                             '</div>';
+
+
+
+
+                            if (window.postAddres && window.postAddres.postMessage) {
+            
+                                postAddres.postMessage(result[0].address.address_name+'');
+                     
+                             }
+                             if (window.placetitle && window.placetitle.postMessage) {
+                 
+                                 placetitle.postMessage(place.place_name+'');
+                      
+                              }
+
+
+
                         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                         i.setContent(content);
 
@@ -295,9 +335,9 @@ const home = () => {
                         } else {
                             i.close();
                             count = 0;
-                            
+
                         }
-                        console.log(count)
+            
 
                         preCircle = circle;
                     }
@@ -328,8 +368,9 @@ const home = () => {
             i.close();
         }
 
-        searchAddress(value);
-        searchKeyword(value);
+      searchAddress(value)
+      
+       
     }
 
     const changeRadius = (value) => {
@@ -422,11 +463,11 @@ const home = () => {
     //addModal
     const showAddModal = () => {
         setVisibleAdd(true)
-  
+
     }
     const addHandleOk = () => { //서버로 수정요청 보내기 로직 실행
         setVisibleAdd(false)
-        console.log(nowPosition,addAddress,changeAdd)
+        console.log(nowPosition, addAddress, changeAdd)
     }
     const addHandleCancel = e => {
         setVisibleAdd(false)
@@ -434,9 +475,9 @@ const home = () => {
 
     //즐겨찾기 추가
     const onClickFavorites = () => {
-        if(count === 0){
+        if (count === 0) {
             alert('즐겨찾기할 장소를 선택해주세요!')
-        }else{
+        } else {
             showAddModal()
         }
     }
@@ -444,14 +485,18 @@ const home = () => {
     return (
         <>
             <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b31117910c5af1f02ade4940f5762a07&libraries=services,clusterer,drawing"></script>
-                
-                <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" /> 
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3b09d655d03ca9c99f659a84811388f&libraries=services,clusterer,drawing"></script>
+
+            <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
             <Col style={{ width: '100%', height: '100%', position: 'fixed' }}>
                 <Row style={{ width: '100%', height: '15%', border: '1px solid', borderColor: 'rgb(242,243,245)' }}>
                     <Col style={{ width: '100%', height: '100%' }}>
                         <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '47%', lineHeight: '1px' }}>
-                            <EnvironmentFilled style={{ fontSize: '23px', lineHeight: '1px' }} /><span style={{ fontSize: '20px', lineHeight: '1px', fontFamily: `Grandstander, cursive`, paddingTop: '5px' }}>4Makers<b>Map</b></span>
+                            <EnvironmentFilled style={{ fontSize: '23px', lineHeight: '1px' }} /><span style={{ fontSize: '20px', lineHeight: '1px', fontFamily: `Grandstander, cursive`, paddingTop: '5px' }} onClick={() => {
+                                if (window.posttest && window.posttest.postMessage)
+                                    window.posttest.postMessage('@@@@hihihihihihihihihihihi');
+                        
+                            }}>4Makers<b>Map</b></span>
                         </Row>
                         <Row justify={'center'} align={'middle'} style={{ width: '100%', height: '53%' }}>
                             <Input id="keyword" style={{ width: '100%', height: '90%', borderColor: 'white', borderRadius: '10px', backgroundColor: 'rgb(242,243,245)', margin: '5px' }} placeholder={'장소,주소 검색'} onPressEnter={searchFuction} />
@@ -526,9 +571,9 @@ const home = () => {
                 <span onClick={zoomOut} style={{ position: 'absolute', top: '170px', right: '5px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'rgb(94,94,94)' }} ><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소" width={'15px'} /></span>
             </div>
 
-          
-            <StarFilled style={{ position: 'absolute',top: '56%', left: '5px', fontSize: '20px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'RGB(250,225,0)' }} onClick={onClickFavorites} />
-       
+
+            <StarFilled style={{ position: 'absolute', top: '56%', left: '5px', fontSize: '20px', border: '1px solid', borderRadius: '50%', padding: '10px', backgroundColor: 'white', borderColor: 'rgb(242,243,245)', color: 'RGB(250,225,0)' }} onClick={onClickFavorites} />
+
         </>
     )
 }
